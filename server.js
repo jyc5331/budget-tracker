@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const compression = require("compression");
 
 const PORT = process.env.PORT || 3001;
+//supply heroku with line 8 by using config vars
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/budget";
 
 const app = express();
@@ -16,9 +17,10 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
-mongoose.connect(MONGODB_URI, {
+mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/budget", {
+  useFindAndModify: false,
   useNewUrlParser: true,
-  useFindAndModify: false
+  useUnifiedTopology: true,
 });
 
 // routes
